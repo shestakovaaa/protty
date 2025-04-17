@@ -23,8 +23,11 @@ def filter_fasta(
     with open(
         os.path.join(output_dir, 'raw', f'{family}.lib'), errors='ignore'
     ) as file:
-        records = list(SeqIO.parse(file, 'fasta'))
-
+        records = list(SeqIO.parse(file, 'fasta')) 
+    exclude_words = {'epoxi', 'lipase', 'esterase', 'non-peptidase', 
+                   'deglycase', 'transferase', 'glucanase', 'abhydrolase'}
+    records = [rec for rec in records if not any(word.lower() in rec.description.lower() 
+                                              for word in exclude_words)]
     if len(records) < min_records:
         logger.info(
             f'File for family {family} was ignored (fewer than {min_records} records).'
