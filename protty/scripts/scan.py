@@ -44,7 +44,7 @@ def parse_args() -> argparse.Namespace:
         '-e',
         default=1e-3,
         type=float,
-        help='E-value threshold for filtering results (default is 1e-3).',
+        help='E-value threshold for filtering results (default is 1e-5).',
     )
     parser.add_argument('hmmfile', help='Path to the HMM database.')
     parser.add_argument('seqfile', help='Path to the query sequences.')
