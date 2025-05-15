@@ -3,7 +3,7 @@ Protty utilizes profile Hidden Markov Models (HMMs) constructed from [MEROPS](ht
 
 ## Installation
 ```bash
-git clone https://github.com/ArtemF42/protty.git
+git clone https://github.com/shestakovaaa/protty.git
 pip install ./protty
 ```
 
