@@ -29,22 +29,22 @@ def parse_args() -> argparse.Namespace:
 
     parser.add_argument(
         '--tsv',
-        default='./predicted_proteases.tsv',
+        default=f"./{os.path.basename(os.path.dirname(os.path.abspath("./a.tsv")))+'.tsv'}",
         help='Path to the output file in TSV format '
-        '(default is ./predicted_proteases.tsv).',
+        '(default is ./a.tsv).',
     )
     parser.add_argument(
         '--faa',
-        default='./predicted_proteases.faa',
+        default=f"./{os.path.basename(os.path.dirname(os.path.abspath("./a.tsv")))+'.faa'}",
         help='Path to the output file in FASTA format '
-        '(default is ./predicted_proteases.faa).',
+        '(default is ./a.faa).',
     )
     parser.add_argument(
         '--evalue',
         '-e',
         default=1e-3,
         type=float,
-        help='E-value threshold for filtering results (default is 1e-5).',
+        help='E-value threshold for filtering results (default is 1e-3).',
     )
     parser.add_argument('hmmfile', help='Path to the HMM database.')
     parser.add_argument('seqfile', help='Path to the query sequences.')
@@ -80,7 +80,7 @@ def main() -> None:
 
         for hits in hmmscan(queries, profiles, E=args.evalue):
             if hits:
-                accession = hits.query.name.decode()
+                accession = os.path.splitext(filename)[0] + hits.query.name.decode()
                 family = hits[0].name.decode().upper()
 
                 seq = Seq(hits.query.textize().sequence)
