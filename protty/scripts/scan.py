@@ -80,7 +80,7 @@ def main() -> None:
 
         for hits in hmmscan(queries, profiles, E=args.evalue):
             if hits:
-                accession = os.path.splitext(os.path.basename(args.seqfile))[1] + hits.query.name.decode()
+                accession = os.path.basename(os.path.dirname(args.seqfile)) + hits.query.name.decode()
                 family = hits[0].name.decode().upper()
 
                 seq = Seq(hits.query.textize().sequence)
