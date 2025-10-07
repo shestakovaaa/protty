@@ -24,13 +24,13 @@ def parse_args() -> argparse.Namespace:
         '--tsv',
         default=None,
         help='Path to the output file in TSV format '
-        '(default is ./[name of directory].tsv).',
+        '(default is [input directory]/[name of directory].tsv).',
     )
     parser.add_argument(
         '--faa',
         default=None,
         help='Path to the output file in FASTA format '
-        '(default is ./[name of directory].faa).',
+        '(default is [input directory]/[name of directory].faa).',
     )
     parser.add_argument(
         '--evalue',
@@ -45,11 +45,13 @@ def parse_args() -> argparse.Namespace:
     args = parser.parse_args()
     
     if args.tsv is None:
-        base_name = os.path.basename(os.path.dirname(os.path.abspath(args.seqfile)))
-        args.tsv = f"./{base_name}.tsv"
+        input_dir = os.path.dirname(os.path.abspath(args.seqfile))
+        base_name = os.path.basename(input_dir)
+        args.tsv = os.path.join(input_dir, f"{base_name}.tsv")
     if args.faa is None:
-        base_name = os.path.basename(os.path.dirname(os.path.abspath(args.seqfile)))
-        args.faa = f"./{base_name}.faa"
+        input_dir = os.path.dirname(os.path.abspath(args.seqfile))
+        base_name = os.path.basename(input_dir)
+        args.faa = os.path.join(input_dir, f"{base_name}.faa")
     
     if not os.path.exists(args.hmmfile):
         sys.exit(f'File {args.hmmfile} not found.')
